@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
-import { Navbar, NavLink, Nav, Container, Button } from "react-bootstrap";
+import { Navbar, NavLink, Nav, Container, Button, Modal, Form, Row, Col } from "react-bootstrap";
 import News from '../Pages/News'
 import Messages from '../Pages/Messages'
 import Home from './../Pages/Home'
@@ -11,6 +11,17 @@ import SignIn from '../Pages/SignIn';
 import Login from '../Pages/Login';
 
 export default function Header() {
+
+    const [showModal, setShowModal] = useState(false);
+
+    const handleClose = () => setShowModal(false);
+    const handleShow = () => setShowModal(true);
+
+    const [showModalRegister, setShowModalRegister] = useState(false);
+
+    const handleCloseRegister = () => setShowModalRegister(false);
+    const handleShowRegister = () => setShowModalRegister(true);
+
     return (
         <>
             <Router>
@@ -44,14 +55,8 @@ export default function Header() {
                                     Search
                                 </NavLink>
                             </Nav>
-                            <Nav>
-                                <NavLink as={Link} to="/sign_in">
-                                    <Button variant="outline-warning">Sign In</Button>
-                                </NavLink>
-                                <NavLink as={Link} to="/login">
-                                    <Button variant="outline-warning">Login</Button>
-                                </NavLink>
-                            </Nav>
+                            <Button className='m-2' variant="outline-warning" onClick={handleShowRegister}>Sign In</Button>
+                            <Button className='m-2' variant="outline-warning" onClick={handleShow}>Login</Button>
                         </Navbar.Collapse>
                     </Container>
                 </Navbar>
@@ -61,10 +66,11 @@ export default function Header() {
                     <Route exact path="/messages" element={<Messages />} />
                     <Route exact path="/news" element={<News />} />
                     <Route exact path="/search" element={<Search />} />
-                    <Route exact path="/sign_in" element={<SignIn />} />
-                    <Route exact path="/login" element={<Login />} />
                 </Routes>
             </Router>
+            <Login showModal={showModal} handleClose={handleClose} />
+            <SignIn showModalRegister={showModalRegister} handleCloseRegister={handleCloseRegister} />
+
         </>
     )
 }

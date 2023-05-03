@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button, Row, Col, Modal } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-export default function Login() {
+export default function Login(props) {
+
+    const { showModal, handleClose } = props;
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -20,40 +23,46 @@ export default function Login() {
     };
 
     return (
-        <Row>
-            <Col className="m-4" sm={4}>
-                <Form onSubmit={handleSubmit}>
-                    <Form.Group className="mb-3" controlId="formEmail">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control
-                            type="email"
-                            placeholder="Enter email"
-                            value={email}
-                            onChange={handleEmailChange}
-                            required
-                        />
-                    </Form.Group>
+        <Modal show={showModal} onHide={handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title className="text-center">Login</Modal.Title>
+            </Modal.Header>
+            <Row>
+                <Col className="m-4 bg-light p-3">
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group className="mb-3" controlId="formEmail">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control
+                                type="email"
+                                placeholder="Enter email"
+                                value={email}
+                                onChange={handleEmailChange}
+                                required
+                            />
+                        </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formPassword">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control
-                            type="password"
-                            placeholder="Enter password"
-                            value={password}
-                            onChange={handlePasswordChange}
-                            required
-                        />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                        <Form.Check type="checkbox" label="Check me out" />
-                    </Form.Group>
+                        <Form.Group className="mb-3" controlId="formPassword">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control
+                                type="password"
+                                placeholder="Enter password"
+                                value={password}
+                                onChange={handlePasswordChange}
+                                required
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                            <Form.Check type="checkbox" label="Check me out" />
+                        </Form.Group>
 
-                    <Button variant="success" type="submit">
-                        Login
-                    </Button>
-                </Form>
-            </Col>
-        </Row>
+                        <Button variant="success" type="submit">
+                            Login
+                        </Button>
+                    </Form>
+                </Col>
+            </Row>
+
+        </Modal>
 
     );
 }
